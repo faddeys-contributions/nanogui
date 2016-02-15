@@ -1,6 +1,6 @@
 [submodule "nanovg"]
     path = ext/nanovg
-    url = https://github.com/wjakob/nanovg
+    url = https://github.com/faddeys-contributions/nanovg
 [submodule "glfw"]
     path = ext/glfw
     url = https://github.com/wjakob/glfw
