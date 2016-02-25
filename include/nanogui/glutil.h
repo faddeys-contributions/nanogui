@@ -15,6 +15,13 @@
 #include <Eigen/Geometry>
 #include <map>
 
+#ifdef NANOGUI_GLM_SUPPORT
+#include <glm/mat4x4.hpp>
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
+#endif
+
 namespace half_float { class half; }
 
 NAMESPACE_BEGIN(nanogui)
@@ -173,6 +180,30 @@ public:
     void setUniform(const std::string &name, const Vector4f &v, bool warn = true) {
         glUniform4f(uniform(name, warn), v.x(), v.y(), v.z(), v.w());
     }
+
+#ifdef NANOGUI_GLM_SUPPORT
+
+    /// Initialize a uniform parameter with a 4x4 matrix
+    void setUniform(const std::string &name, const glm::mat4 &mat, bool warn = true) {
+        glUniformMatrix4fv(uniform(name, warn), 1, GL_FALSE, &mat[0][0]);
+    }
+
+    /// Initialize a uniform parameter with a 2D vector
+    void setUniform(const std::string &name, const glm::vec2 &v, bool warn = true) {
+        glUniform2f(uniform(name, warn), v.x, v.y);
+    }
+
+    /// Initialize a uniform parameter with a 3D vector
+    void setUniform(const std::string &name, const glm::vec3 &v, bool warn = true) {
+        glUniform3f(uniform(name, warn), v.x, v.y, v.z);
+    }
+
+    /// Initialize a uniform parameter with a 4D vector
+    void setUniform(const std::string &name, const glm::vec4 &v, bool warn = true) {
+        glUniform4f(uniform(name, warn), v.x, v.y, v.z, v.w);
+    }
+
+#endif
 
     /// Return the size of all registered buffers in bytes
     size_t bufferSize() const {
